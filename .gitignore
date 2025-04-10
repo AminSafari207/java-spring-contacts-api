@@ -2,8 +2,13 @@
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-.idea/dictionaries
-target/
+.idea/
+*.iml
+
+
+# Maven
+/target/
+!.mvn/wrapper/maven-wrapper.jar
 
 ### Eclipse ###
 .apt_generated
