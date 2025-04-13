@@ -1,17 +1,26 @@
 package com.contactsapi.model;
 
+import jakarta.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
+@Entity
 public class Contact {
+
+    @Id
+    @GeneratedValue
     private UUID id;
+
     private String name;
+
     private String phoneNumber;
+
     private String email;
+
+    @ElementCollection
     private List<String> tags;
 
     public Contact() {
-        // No-arg constructor required by Spring (Jackson)
     }
 
     public Contact(UUID id, String name, String phoneNumber, String email, List<String> tags) {
