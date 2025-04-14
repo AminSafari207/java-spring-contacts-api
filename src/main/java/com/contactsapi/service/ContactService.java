@@ -1,39 +1,47 @@
 package com.contactsapi.service;
 
 import com.contactsapi.model.Contact;
+import com.contactsapi.repository.ContactRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ContactService {
-    private final Map<UUID, Contact> contactMap = new LinkedHashMap<>();
+
+    private final ContactRepository repository;
+
+    public ContactService(ContactRepository repository) {
+        this.repository = repository;
+    }
 
     public List<Contact> getAllContacts() {
-        return new ArrayList<>(contactMap.values());
+        return repository.findAll();
     }
 
     public Contact getContactById(UUID id) {
-        return contactMap.get(id);
+        return repository.findById(id).orElse(null);
     }
 
     public Contact createContact(Contact contact) {
-        UUID id = UUID.randomUUID();
-        contact.setId(id);
-        contactMap.put(id, contact);
-        return contact;
+        return repository.save(contact);
     }
 
     public Contact updateContact(UUID id, Contact updated) {
-        if (!contactMap.containsKey(id)) {
+        if (!repository.existsById(id)) {
             return null;
         }
-        updated.setId(id); // keep original ID
-        contactMap.put(id, updated);
-        return updated;
+        updated.setId(id);
+        return repository.save(updated);
     }
 
     public boolean deleteContact(UUID id) {
-        return contactMap.remove(id) != null;
+        if (!repository.existsById(id)) {
+            return false;
+        }
+        repository.deleteById(id);
+        return true;
     }
 }
