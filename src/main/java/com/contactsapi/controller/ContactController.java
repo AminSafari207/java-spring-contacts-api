@@ -22,7 +22,7 @@ public class ContactController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Contact> getContact(@PathVariable UUID id) {
+    public ResponseEntity<Contact> getContact(@PathVariable("id") UUID id) {
         Contact contact = service.getContactById(id);
         return contact != null
                 ? ResponseEntity.ok(contact)
