@@ -36,7 +36,7 @@ public class ContactController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Contact> updateContact(@PathVariable UUID id, @RequestBody Contact updated) {
+    public ResponseEntity<Contact> updateContact(@PathVariable("id") UUID id, @RequestBody Contact updated) {
         Contact result = service.updateContact(id, updated);
         return result != null
                 ? ResponseEntity.ok(result)
@@ -44,7 +44,7 @@ public class ContactController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteContact(@PathVariable UUID id) {
+    public ResponseEntity<Void> deleteContact(@PathVariable("id") UUID id) {
         boolean deleted = service.deleteContact(id);
         return deleted
                 ? ResponseEntity.noContent().build()
